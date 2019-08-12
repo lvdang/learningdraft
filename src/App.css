@@ -23,6 +23,11 @@
   color: #61dafb;
 }
 
+.App-Editor-Debug {
+  height: 1000px;
+  width: 50%;
+}
+
 .App-EditorBorder {
   border: 1px solid blue;
 }

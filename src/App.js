@@ -1,24 +1,16 @@
-import React, { Component, createElement, cloneElement} from 'react';
+import React, { Component, createElement, cloneElement, useState} from 'react';
 import { Editor, EditorState, RichUtils} from 'draft-js';
 import './App.css';
-import ConsoleButtons from './components/ConsoleButtons';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      editorState: EditorState.createEmpty(),
-    };
+const App = () => {
+  const [editorState, setEditorChange] = useState(EditorState.createEmpty());
 
-    this.onChange = this.onChange.bind(this);
+  const onChange = editorState => {
+    setEditorChange(editorState);
   }
 
-  onChange(editorState) {
-    this.setState({editorState});
-  }
-
-  handleKeyCommand = (command) => {
-    const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
+  const handleKeyCommand = command => {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
 
     if (newState) {
       this.onChange(newState);
@@ -28,22 +20,23 @@ class App extends Component {
     return 'not-handled';
   }
 
-  render() {
-    let str  = JSON.stringify(this.state.editorState.toJS(), null, 4);
-
-    return (
-      <>
-        <div className="App-EditorBorder">
-          <Editor
-            handleKeyCommand={this.handleKeyCommand}
-            onChange={this.onChange}
-            editorState={this.state.editorState}
-          />
-        </div>
-       <textarea className='App-Editor-Debug' value={str}/>
-      </>
-    );
+  const onUnderlineClick = () => {
+    onChange(RichUtils.toggleInlineStyle(editorState, 'UNDERLINE'));
   }
+
+  return (
+    <>
+      <button onClick={onUnderlineClick}>Underline</button>
+      <div className="App-EditorBorder">
+        <Editor
+          handleKeyCommand={handleKeyCommand}
+          onChange={onChange}
+          editorState={editorState}
+        />
+      </div>
+      <textarea className='App-Editor-Debug' value={JSON.stringify(editorState.toJS(), null, 4)}/>
+    </>
+  );
 }
 
 export default App;

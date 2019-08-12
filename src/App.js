@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { Editor, EditorState } from 'draft-js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      editorState: EditorState.createEmpty(),
+    };
+
+    this.handleOnChange = this.handleOnChange.bind(this);
+  }
+
+  handleOnChange(editorState) {
+    this.setState({editorState});
+  }
+
+  render() {
+    return (
+      <div className='App-EditorBorder'>
+        <Editor
+          onChange={this.handleOnChange}
+          editorState={this.state.editorState}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;

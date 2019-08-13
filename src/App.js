@@ -18,6 +18,8 @@ const { DecoratedHighlight } = highlightPlugin;
 
 const App = () => {
   const [editorState, setEditorChange] = useState(EditorState.createEmpty());
+  const [search, setSearch] = useState('');
+  const [replace, setReplace] = useState('');
 
   const onChange = editorState => {
     const contentState = editorState.getCurrentContent();
@@ -30,7 +32,6 @@ const App = () => {
   useEffect(() => {
     const content = window.localStorage.getItem('content');
     if (content) {
-      console.log('content is', content);
       setEditorChange(EditorState.createWithContent(convertFromRaw(JSON.parse(content))));
     }
   }, []);
@@ -64,12 +65,40 @@ const App = () => {
     window.localStorage.setItem('content', JSON.stringify(convertToRaw(content)));
   }
 
+ const onChangeSearch = e => {
+   setSearch(e.target.value);
+  }
+
+  const onChangeReplace = e => {
+    setReplace(e.target.value);
+  }
+
+
+  const onReplace = () => {
+    console.log(`replacing "${search}" with "${replace}"`);
+  }
+
   return (
     <>
       {/*<button onClick={onUnderlineClick}>Underline</button>*/}
       {/*<button onClick={onToggleCode}>Code Block</button>*/}
       <button onClick={clearLocalStorage}>Clear All Persisent Data</button>
       <button onClick={saveContent}>Save Persistent Data</button>
+      <div className="search-and-replace">
+        <input
+          value={search}
+          onChange={onChangeSearch}
+          placeholder="Search..."
+        />
+        <input
+          value={replace}
+          onChange={onChangeReplace}
+          placeholder="Replace..."
+        />
+        <button onClick={onReplace}>
+          Replace
+        </button>
+      </div>
       <div className="App-EditorBorder">
         <Editor
           onChange={onChange}
@@ -79,6 +108,7 @@ const App = () => {
       </div>
       <DecoratedHighlight/>
       <EmojiSuggestions />
+
       <textarea className='App-Editor-Debug' value={JSON.stringify(editorState.toJS(), null, 4)}/>
     </>
   );

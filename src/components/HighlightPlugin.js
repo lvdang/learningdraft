@@ -1,12 +1,24 @@
 import  { RichUtils } from 'draft-js';
+import React from 'react';
 
-export default () => {
+const defaultStyle = {
+  background: 'blue',
+  padding: '0 .3em',
+  color: '#fff',
+};
+
+export default (style = {}) => {
+  const DecoratedHighlight = props => {
+    console.log('props', props);
+    return (<div>{"Highlight"}</div>);
+  };
+
   return {
+    DecoratedHighlight,
     customStyleMap: {
       'HIGHLIGHT': {
-        background: 'blue',
-        padding: '0 .3em',
-        color: '#fff',
+        ...defaultStyle,
+        ...style,
       }
     },
     keyBindingFn: (e) => {

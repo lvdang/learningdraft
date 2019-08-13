@@ -1,5 +1,6 @@
 import React, { Component, createElement, cloneElement, useState} from 'react';
-import { Editor, EditorState, RichUtils} from 'draft-js';
+import {EditorState, RichUtils} from 'draft-js';
+import Editor from 'draft-js-plugins-editor';
 import './App.css';
 
 const App = () => {
@@ -24,12 +25,16 @@ const App = () => {
     onChange(RichUtils.toggleInlineStyle(editorState, 'UNDERLINE'));
   }
 
+  const onToggleCode = () => {
+    onChange(RichUtils.toggleCode(editorState));
+  }
+
   return (
     <>
-      <button onClick={onUnderlineClick}>Underline</button>
+      {/*<button onClick={onUnderlineClick}>Underline</button>*/}
+      {/*<button onClick={onToggleCode}>Code Block</button>*/}
       <div className="App-EditorBorder">
         <Editor
-          handleKeyCommand={handleKeyCommand}
           onChange={onChange}
           editorState={editorState}
         />

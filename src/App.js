@@ -1,16 +1,41 @@
 import React, { Component, createElement, cloneElement, useState, useEffect} from 'react';
-import {EditorState, RichUtils, convertToRaw, convertFromRaw} from 'draft-js';
+import {EditorState, RichUtils, convertToRaw, convertFromRaw, CompositeDecorator} from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
 import './App.css';
 import createHighlightPlugin from './components/HighlightPlugin';
 import createImagePlugin from 'draft-js-emoji-plugin';
 import 'draft-js-emoji-plugin/lib/plugin.css'
+import SearchHighlight from './components/SearchHighlight';
 
 const highlightPlugin = createHighlightPlugin({
   background: 'purple',
   color: 'yellow',
   border: '1px solid black',
 });
+
+const findWithRegex = (regex, contentBlock, callback) => {
+  const text = contentBlock.getText();
+  let matchArr, start, end;
+  while ((matchArr = regex.exec(text)) !== null) {
+    start = matchArr.index;
+    end = start + matchArr[0].length;
+    callback(start, end);
+  }
+};
+
+const generateDecorator = (highlightTerm) => {
+  const regex = new RegExp(highlightTerm, 'g');
+  console.log('regex', regex);
+  return new CompositeDecorator([{
+    strategy: (contentBlock, callback) => {
+      if (highlightTerm !== '') {
+        findWithRegex(regex, contentBlock, callback);
+      }
+    },
+    component: SearchHighlight,
+  }])
+};
+
 
 const imagePlugin = createImagePlugin();
 const { EmojiSuggestions } = imagePlugin;
@@ -67,12 +92,13 @@ const App = () => {
 
  const onChangeSearch = e => {
    setSearch(e.target.value);
+   console.log('onChangeSearch', e.target.value);
+   onChange(EditorState.set(editorState, {decorator: generateDecorator(e.target.value)}))
   }
 
   const onChangeReplace = e => {
     setReplace(e.target.value);
   }
-
 
   const onReplace = () => {
     console.log(`replacing "${search}" with "${replace}"`);

@@ -1,0 +1,9 @@
+
+
+.search {
+  --editor-font-color: purple;
+}
+
+.search {
+  color: var(--editor-font-color);
+}

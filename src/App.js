@@ -1,5 +1,5 @@
 import React, { Component, createElement, cloneElement, useState, useEffect} from 'react';
-import {EditorState, RichUtils, convertToRaw, convertFromRaw, CompositeDecorator} from 'draft-js';
+import {EditorState, RichUtils, convertToRaw, convertFromRaw, CompositeDecorator, SelectionState, Modifier} from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
 import './App.css';
 import createHighlightPlugin from './components/HighlightPlugin';
@@ -14,6 +14,7 @@ const highlightPlugin = createHighlightPlugin({
   border: '1px solid black',
 });
 
+// Method is used to loop over the required text
 const findWithRegex = (regex, contentBlock, callback) => {
   const text = contentBlock.getText();
   let matchArr, start, end;
@@ -73,6 +74,8 @@ const App = () => {
     return 'not-handled';
   }
 
+  const readable = content => JSON.stringify(content.toJS(), null, 4);
+
   const clearLocalStorage = () => {
     window.localStorage.removeItem('content');
     setEditorChange(EditorState.createEmpty());
@@ -93,7 +96,6 @@ const App = () => {
 
  const onChangeSearch = e => {
    setSearch(e.target.value);
-   console.log('onChangeSearch', e.target.value);
    onChange(EditorState.set(editorState, {decorator: generateDecorator(e.target.value)}))
   }
 
@@ -102,7 +104,38 @@ const App = () => {
   }
 
   const onReplace = () => {
-    console.log(`replacing "${search}" with "${replace}"`);
+    const regex = new RegExp(search, 'g');
+    const selectionsToReplace = [];
+    const blockMap = editorState.getCurrentContent().getBlockMap();
+
+    blockMap.forEach((contentBlock) => (
+      findWithRegex(regex, contentBlock, (start, end) => {
+        const blockKey = contentBlock.getKey();
+        console.log(readable(SelectionState
+          .createEmpty(blockKey)))
+        const blockSelection = SelectionState
+          .createEmpty(blockKey)
+          .merge({
+            anchorOffset: start,
+            focusOffset: end,
+          });
+
+        console.log('merge selection', readable(blockSelection));
+        selectionsToReplace.push(blockSelection)
+      })
+    ));
+
+    let contentState = editorState.getCurrentContent();
+
+    selectionsToReplace.forEach(selectionState => {
+      contentState = Modifier.replaceText(
+        contentState,
+        selectionState,
+        replace,
+      )
+    });
+
+    setEditorChange(EditorState.push(editorState, contentState, 'change-block-type'));
   }
 
   return (

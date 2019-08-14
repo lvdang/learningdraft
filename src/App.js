@@ -1,5 +1,5 @@
 import React, { Component, createElement, cloneElement, useState, useEffect} from 'react';
-import {EditorState, RichUtils, convertToRaw, convertFromRaw, CompositeDecorator, SelectionState, Modifier} from 'draft-js';
+import {EditorState, RichUtils, convertToRaw, convertFromRaw, CompositeDecorator, ContentState, SelectionState, Modifier} from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
 import './App.css';
 import createHighlightPlugin from './components/HighlightPlugin';
@@ -44,7 +44,9 @@ const { DecoratedHighlight } = highlightPlugin;
 const newLinePlugin =  createNewlinePlugin();
 
 const App = () => {
-  const [editorState, setEditorChange] = useState(EditorState.createEmpty());
+  // Use this for creating dynamic EditorState object
+  const text = EditorState.createWithContent(ContentState.createFromText('Hello,peace', ","));
+  const [editorState, setEditorChange] = useState(text);
   const [search, setSearch] = useState('');
   const [replace, setReplace] = useState('');
 
@@ -59,7 +61,7 @@ const App = () => {
   useEffect(() => {
     const content = window.localStorage.getItem('content');
     if (content) {
-      setEditorChange(EditorState.createWithContent(convertFromRaw(JSON.parse(content))));
+      //setEditorChange(EditorState.createWithContent(convertFromRaw(JSON.parse(content))));
     }
   }, []);
 

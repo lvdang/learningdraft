@@ -16,19 +16,29 @@ export default (style = {}) => {
   return {
     DecoratedHighlight,
     customStyleMap: {
-      'HIGHLIGHT': {
+      'HIGHLIGHTWORLD': {
         ...defaultStyle,
         ...style,
+      },
+      'BOLDP': {
+        background: 'red',
       }
     },
     keyBindingFn: (e) => {
       if (e.metaKey && e.key === 'h') {
         return 'highlight';
+      } else if (e.metaKey && e.key === 'p') {
+        return 'boldp';
       }
     },
     handleKeyCommand: (command, editorState, eventTimeStamp, { setEditorState }) => {
       if (command === 'highlight') {
-        setEditorState(RichUtils.toggleInlineStyle(editorState, 'HIGHLIGHT'));
+        setEditorState(RichUtils.toggleInlineStyle(editorState, 'HIGHLIGHTWORLD'));
+        return true;
+      }
+
+      if (command === 'boldp') {
+        setEditorState(RichUtils.toggleInlineStyle(editorState, 'BOLDP'));
         return true;
       }
     },

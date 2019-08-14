@@ -4,6 +4,7 @@
     <list default="true" id="9747f611-038a-4b61-bd39-8f1c6684f2f4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HighlightPlugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HighlightPlugin.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,6 +47,7 @@
   <component name="ProjectId" id="1PLIMbc4QjA3KocdNRsCtuE6Fyx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -78,7 +80,7 @@
       <option name="presentableId" value="Default" />
       <updated>1565646903216</updated>
       <workItem from="1565646907054" duration="7958000" />
-      <workItem from="1565764220544" duration="1257000" />
+      <workItem from="1565764220544" duration="4943000" />
     </task>
     <servers />
   </component>

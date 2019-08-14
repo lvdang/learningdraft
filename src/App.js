@@ -111,8 +111,6 @@ const App = () => {
     blockMap.forEach((contentBlock) => (
       findWithRegex(regex, contentBlock, (start, end) => {
         const blockKey = contentBlock.getKey();
-        console.log(readable(SelectionState
-          .createEmpty(blockKey)))
         const blockSelection = SelectionState
           .createEmpty(blockKey)
           .merge({
@@ -120,7 +118,6 @@ const App = () => {
             focusOffset: end,
           });
 
-        console.log('merge selection', readable(blockSelection));
         selectionsToReplace.push(blockSelection)
       })
     ));
@@ -128,14 +125,19 @@ const App = () => {
     let contentState = editorState.getCurrentContent();
 
     selectionsToReplace.forEach(selectionState => {
+      // update the contentState key one at a time
       contentState = Modifier.replaceText(
         contentState,
         selectionState,
         replace,
       )
+
+      // console.log('contentState loop', readable(contentState));
     });
 
     setEditorChange(EditorState.push(editorState, contentState, 'change-block-type'));
+
+    //onChange(EditorState.set(editorState, {decorator: generateDecorator(e.target.value)}))
   }
 
   return (
@@ -163,7 +165,7 @@ const App = () => {
         <Editor
           onChange={onChange}
           editorState={editorState}
-          plugins={[imagePlugin, highlightPlugin, newLinePlugin]}
+          plugins={[imagePlugin, highlightPlugin]}
         />
       </div>
       <EmojiSuggestions />

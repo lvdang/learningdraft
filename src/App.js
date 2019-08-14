@@ -6,6 +6,7 @@ import createHighlightPlugin from './components/HighlightPlugin';
 import createImagePlugin from 'draft-js-emoji-plugin';
 import 'draft-js-emoji-plugin/lib/plugin.css'
 import SearchHighlight from './components/SearchHighlight';
+import createNewlinePlugin from './components/HandleNewLine';
 
 const highlightPlugin = createHighlightPlugin({
   background: 'purple',
@@ -36,10 +37,10 @@ const generateDecorator = (highlightTerm) => {
   }])
 };
 
-
 const imagePlugin = createImagePlugin();
 const { EmojiSuggestions } = imagePlugin;
 const { DecoratedHighlight } = highlightPlugin;
+const newLinePlugin =  createNewlinePlugin();
 
 const App = () => {
   const [editorState, setEditorChange] = useState(EditorState.createEmpty());
@@ -129,10 +130,9 @@ const App = () => {
         <Editor
           onChange={onChange}
           editorState={editorState}
-          plugins={[highlightPlugin, imagePlugin]}
+          plugins={[imagePlugin, highlightPlugin, newLinePlugin]}
         />
       </div>
-      <DecoratedHighlight/>
       <EmojiSuggestions />
 
       <textarea className='App-Editor-Debug' value={JSON.stringify(editorState.toJS(), null, 4)}/>

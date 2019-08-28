@@ -7,6 +7,8 @@ import createImagePlugin from 'draft-js-emoji-plugin';
 import 'draft-js-emoji-plugin/lib/plugin.css'
 import SearchHighlight from './components/SearchHighlight';
 import createNewlinePlugin from './components/HandleNewLine';
+import createCounterPlugin from './plugins/Counter/Counter';
+
 
 const highlightPlugin = createHighlightPlugin({
   background: 'purple',
@@ -43,6 +45,9 @@ const { EmojiSuggestions } = imagePlugin;
 const { DecoratedHighlight } = highlightPlugin;
 const newLinePlugin =  createNewlinePlugin();
 
+const counterPlugin = createCounterPlugin();
+const {DecoratedCounter} = counterPlugin;
+
 const App = () => {
   // Use this for creating dynamic EditorState object
   const text = EditorState.createWithContent(ContentState.createFromText('Hello,peace', ","));
@@ -51,6 +56,8 @@ const App = () => {
   const [replace, setReplace] = useState('');
 
   const onChange = editorState => {
+    const focusKey = editorState.getSelection().getFocusKey();
+    console.log('onChange called here focusKey', focusKey);
     const contentState = editorState.getCurrentContent();
     const key = editorState.getSelection().getStartKey();
     const keyBlock = contentState.getBlockForKey(key);
@@ -103,6 +110,12 @@ const App = () => {
 
   const onChangeReplace = e => {
     setReplace(e.target.value);
+  }
+
+  const blockStyleFn = contentBlock => {
+    if (contentBlock.getText() === 'Hii') {
+      return 'cssClassToUseOnEveryHii';
+    }
   }
 
   const onReplace = () => {
@@ -167,10 +180,15 @@ const App = () => {
         <Editor
           onChange={onChange}
           editorState={editorState}
-          plugins={[imagePlugin, highlightPlugin]}
+          plugins={[imagePlugin, highlightPlugin, counterPlugin]}
+          blockStyleFn={blockStyleFn}
         />
       </div>
       <EmojiSuggestions />
+
+      <DecoratedHighlight/>
+
+      <DecoratedCounter/>
 
       <textarea className='App-Editor-Debug' value={JSON.stringify(editorState.toJS(), null, 4)}/>
     </>

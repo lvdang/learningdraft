@@ -1,5 +1,6 @@
 import  { RichUtils } from 'draft-js';
 import React from 'react';
+import './HighlightPlugin.css';
 
 const defaultStyle = {
   background: 'blue',
@@ -8,9 +9,9 @@ const defaultStyle = {
 };
 
 export default (style = {}) => {
+
   const DecoratedHighlight = props => {
-    console.log('props', props);
-    return (<div>{"Highlight"}</div>);
+    return (<div className="highlight">{"HighlightBoo"}</div>);
   };
 
   return {

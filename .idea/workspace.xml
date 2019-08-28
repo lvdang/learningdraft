@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9747f611-038a-4b61-bd39-8f1c6684f2f4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/HighlightPlugin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/https.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/plugins/Counter/Counter.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/plugins/Counter/Counter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/plugins/Counter/DecorateErrorCount.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/HighlightPlugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HighlightPlugin.js" afterDir="false" />
     </list>
@@ -27,22 +33,6 @@
     <exe-path />
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
-  </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-        <option value="$PROJECT_DIR$/.idea/my-draftjs-project.iml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
-        <option value="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-        <option value="$PROJECT_DIR$/.idea/my-draftjs-project.iml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
-      </list>
-    </option>
   </component>
   <component name="ProjectId" id="1PLIMbc4QjA3KocdNRsCtuE6Fyx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -80,12 +70,25 @@
       <option name="presentableId" value="Default" />
       <updated>1565646903216</updated>
       <workItem from="1565646907054" duration="7958000" />
-      <workItem from="1565764220544" duration="4943000" />
+      <workItem from="1565764220544" duration="7716000" />
+      <workItem from="1565988701071" duration="45000" />
+      <workItem from="1566092672673" duration="2755000" />
+      <workItem from="1566179398596" duration="5641000" />
+      <workItem from="1566539331480" duration="4680000" />
+      <workItem from="1566783537600" duration="24000" />
+      <workItem from="1566941038639" duration="2839000" />
+      <workItem from="1566959561648" duration="1554000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$USER_HOME$/git/thor/node_modules/intl-messageformat/core.js" />
+        <option value="$USER_HOME$/git/thor/node_modules/intl-messageformat/core.d.ts" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

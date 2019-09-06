@@ -10,6 +10,35 @@ import createNewlinePlugin from './components/HandleNewLine';
 import createCounterPlugin from './plugins/Counter/Counter';
 
 
+const HANDLE_REGEX = /\@[\w]+/g;
+const HASHTAG_REGEX = /\#[\w\u0590-\u05ff]+/g;
+
+function handleStrategy(contentBlock, callback, contentState) {
+  console.log('handleStrategy');
+  findWithRegexA(HANDLE_REGEX, contentBlock, callback);
+}
+
+function hashtagStrategy(contentBlock, callback, contentState) {
+  findWithRegexA(HASHTAG_REGEX, contentBlock, callback);
+}
+
+function findWithRegex(regex, contentBlock, callback) {
+  const text = contentBlock.getText();
+  let matchArr, start;
+  while ((matchArr = regex.exec(text)) !== null) {
+    start = matchArr.index;
+    callback(start, start + matchArr[0].length);
+  }
+}
+
+const HandleSpan = (props) => {
+  return <span {...props}>{props.children}</span>;
+};
+
+const HashtagSpan = (props) => {
+  return <span {...props}>{props.children}</span>;
+};
+
 const highlightPlugin = createHighlightPlugin({
   background: 'purple',
   color: 'yellow',
@@ -17,7 +46,7 @@ const highlightPlugin = createHighlightPlugin({
 });
 
 // Method is used to loop over the required text
-const findWithRegex = (regex, contentBlock, callback) => {
+const findWithRegexA = (regex, contentBlock, callback) => {
   const text = contentBlock.getText();
   let matchArr, start, end;
   while ((matchArr = regex.exec(text)) !== null) {
@@ -29,7 +58,6 @@ const findWithRegex = (regex, contentBlock, callback) => {
 
 const generateDecorator = (highlightTerm) => {
   const regex = new RegExp(highlightTerm, 'g');
-  console.log('regex', regex);
   return new CompositeDecorator([{
     strategy: (contentBlock, callback) => {
       if (highlightTerm !== '') {
@@ -54,6 +82,17 @@ const App = () => {
   const [editorState, setEditorChange] = useState(text);
   const [search, setSearch] = useState('');
   const [replace, setReplace] = useState('');
+
+  const decorators = [
+    {
+      strategy: handleStrategy,
+      component: HandleSpan,
+    },
+    {
+      strategy: hashtagStrategy,
+      component: HashtagSpan,
+    },
+  ];
 
   const onChange = editorState => {
     const focusKey = editorState.getSelection().getFocusKey();
@@ -180,6 +219,7 @@ const App = () => {
         <Editor
           onChange={onChange}
           editorState={editorState}
+          decorators={decorators}
           plugins={[imagePlugin, highlightPlugin, counterPlugin]}
           blockStyleFn={blockStyleFn}
         />

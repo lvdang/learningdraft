@@ -1,4 +1,4 @@
-import  { RichUtils } from 'draft-js';
+import  {RichUtils, EditorBlock} from 'draft-js';
 import React from 'react';
 import './HighlightPlugin.css';
 
@@ -14,7 +14,34 @@ export default (style = {}) => {
     return (<div className="highlight">{"HighlightBoo"}</div>);
   };
 
+  const Item = props => (
+    <>
+      <div className="ipBlockIconContainer">
+        <img width="50px" src="https://a.slack-edge.com/80588/marketing/img/logos/company/_color/airbnb-logo.png" />
+      </div>
+      <div className="editorBox">
+        <EditorBlock {...props}/>
+      </div>
+    </>
+  );
   return {
+    blockStyleFn: block => {
+      switch (block.getType()) {
+        case "unstyled":
+          return "ipBlock ipBlockMain";
+        default:
+          return "ipBlock";
+      }
+    },
+    blockRendererFn: (contentBlock, {setEditorState, getEditorState}) => {
+      return {
+        component: Item,
+        props: {
+          onChange: setEditorState,
+          getEditorState: getEditorState(),
+        },
+      };
+    },
     DecoratedHighlight,
     customStyleMap: {
       'HIGHLIGHTWORLD': {
@@ -41,6 +68,21 @@ export default (style = {}) => {
       if (command === 'boldp') {
         setEditorState(RichUtils.toggleInlineStyle(editorState, 'BOLDP'));
         return true;
+      }
+
+      // This is needed for renderBlockFn to work properly to set the editorState with newState
+      // Will our own key command then update editorState
+      if (command === 'backspace') { // Handle Delete aka 'backspace'
+        const newState = RichUtils.onBackspace(editorState);
+
+        if (newState !== null) {
+          // Only update when newState is not empty
+          setEditorState(newState);
+
+          return 'handled';
+        }
+
+        return 'not-handled';
       }
     },
   };

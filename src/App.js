@@ -32,6 +32,7 @@ function findWithRegex(regex, contentBlock, callback) {
 }
 
 const HandleSpan = (props) => {
+  console.log('handle span here');
   return <span {...props}>{props.children}</span>;
 };
 

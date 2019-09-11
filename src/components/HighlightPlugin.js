@@ -17,7 +17,7 @@ export default (style = {}) => {
   const Item = props => (
     <>
       <div className="ipBlockIconContainer">
-        <img width="50px" src="https://a.slack-edge.com/80588/marketing/img/logos/company/_color/airbnb-logo.png" />
+        <img alt="Slack API"  width="50px" src="https://a.slack-edge.com/80588/img/slack_api_logo_vogue.png"/>
       </div>
       <div className="editorBox">
         <EditorBlock {...props}/>
